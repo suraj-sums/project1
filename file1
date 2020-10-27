@@ -1,4 +1,37 @@
-this is file 1
-bashbjsbnkjc
-jasnjbcjsacksjan
-hey
+---
+schemaVersion: '0.3'
+description: Install MSI package and run validation.
+mainSteps:
+- name: InstallMsiPackage
+  action: aws:runCommand
+  maxAttempts: 2
+  onFailure: Abort
+  inputs:
+    InstanceIds:
+    - i-058f01c73c309afff
+    DocumentName: AWS-RunShellScript
+    Parameters:
+      commands:
+      - sudo sh /opt/sam/pre.sh
+  nextStep: RunPatches
+- name: RunPatches   
+  action: aws:runCommand
+  maxAttempts: 1
+  timeoutSeconds: 500
+  onFailure: Abort
+  inputs:
+    InstanceIds:
+    - i-058f01c73c309afff
+    DocumentName: task1
+  nextStep: RunPostScript
+- name: RunPostScript
+  action: aws:runCommand
+  maxAttempts: 2
+  onFailure: Abort
+  inputs:
+    InstanceIds:
+    - i-058f01c73c309afff
+    DocumentName: AWS-RunShellScript
+    Parameters:
+      commands:
+      - sudo sh /opt/sam/pre.sh
