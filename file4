@@ -1,1 +1,13 @@
 file4
+sudo dnf update
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+dnf install ansible
+adduser ansible
+passwd ansible
+
+sudo dnf install python3-pip
+#Make sure you are a ansible user
+#pip3 install ansible --user
+
+add ansible user into sudoers file
+make ssh connection between them elminate password thing
